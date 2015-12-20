@@ -2,7 +2,6 @@ package se.github.datalab.repository.jpastorage;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.TypedQuery;
 
 import se.github.datalab.model.Id;
 import se.github.datalab.repository.StorageRepository;

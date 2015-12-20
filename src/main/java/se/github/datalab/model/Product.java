@@ -2,7 +2,14 @@ package se.github.datalab.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
+@NamedQueries(value = {
+			@NamedQuery(name = "Product.GetAll", query = "SELECT p FROM Product p"),
+			@NamedQuery(name = "Product.GetProductById", query = "SELECT p FROM Product WHERE p.Id = ???"),
+			@NamedQuery(name = "Product.GetProduct", query = "SELECT p FROM Product WHERE p.name = :name")
+})
 @Entity
 public class Product extends Id
 {

@@ -5,9 +5,15 @@ import java.util.HashSet;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
+@NamedQueries(value ={ 
+			@NamedQuery(name = "User.GetAll", query = "SELECT u FROM User e"),
+			@NamedQuery(name = "User.GetUserById", query = "SELECT u FROM User u WHERE u.Id = ???"),
+			@NamedQuery(name = "User.GetUsername", query = "SELECT u FROM User u WHERE u.username = :username")
+})
 @Entity
 public class User extends Id
 {

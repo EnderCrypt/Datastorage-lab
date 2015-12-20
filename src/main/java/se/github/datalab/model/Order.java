@@ -6,9 +6,16 @@ import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+@NamedQueries(value = {
+			@NamedQuery(name = "Order.GetAll", query = "SELECT o FROM Order o"),
+			@NamedQuery(name = "Order.GetOrderById", query = "SELECT o FROM Order o WHERE Id = ???"),
+			//@NamedQuery(name = "Order.GetOrderFromUser", query = "SELECT o FROM Order o WHERE")
+})
 @Entity
 @Table(name="Orders")
 public class Order extends Id

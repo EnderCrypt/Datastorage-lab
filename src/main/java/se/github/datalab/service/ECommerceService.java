@@ -1,7 +1,6 @@
 package se.github.datalab.service;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import se.github.datalab.model.Order;
 import se.github.datalab.model.Product;
@@ -16,10 +15,11 @@ public class ECommerceService
 	private ProductRepository prodRepo;
 	private OrderRepository orderRepo;
 
-	public final OrderCategory order = new OrderCategory();
+	// public final OrderCategory order = new OrderCategory();
 
 	// TODO: make eCommerce take in unlimited amount of repositories
-	//TODO: Check doc file to see which methods/operations eCom needs to have toward the database
+	// TODO: Check doc file to see which methods/operations eCom needs to have
+	// toward the database
 	public ECommerceService(UserRepository userRepo, ProductRepository prodRepo, OrderRepository orderRepo)
 	{
 		this.userRepo = userRepo;
@@ -27,34 +27,91 @@ public class ECommerceService
 		this.orderRepo = orderRepo;
 	}
 
+	// ----------- USER---------
+
 	public void addUser(User user)
 	{
-		userRepo.update(user);
 	}
+
+	public List<User> getAllUsers(User user)
+	{
+		// return new ArrayList<>(userRepo.getAll);
+		return null;
+	}
+
+	public User getUserById(Long id)
+	{
+		return userRepo.getById(id);
+	}
+
+	public User getUsername(String username)
+	{
+		return null;
+	}
+
+	public User createUser(User user)
+	{
+		return null;
+	}
+
+	public User updateUser(User user)
+	{
+		return null;
+	}
+
+	public User changeUserStatus(User user)
+	{
+		return null;
+	}
+
+	// -------------ORDER---------
 
 	public void addOrder(Order order)
 	{
 	}
 
+	public Order getOrderById(Long id)
+	{
+		return orderRepo.getById(id);
+	}
+
+	public List<Order> getAllOrders(Order order)
+	{
+		return null;
+	}
+
+	public List<Order> getAllOrderByUsername(User user)
+	{
+		return null;
+	}
+
+	// ------------PRODUCT------------
 	public void addProduct(Product product)
 	{
-
 	}
 
-	public Product getById(Long id)
+	public Product getProductById(Product product)
 	{
-		return prodRepo.getById(id);
+		return null;
 	}
 
-	public Set<User> getAllUsers()
+	public Product getAllProducts(Product product)
 	{
-		return new HashSet<>(userRepo.getAll());
+		return null;
 	}
 
-	//TODO: categorize each operation/method to its respective category
-	public class OrderCategory
+	public Product getProductName(Product product)
 	{
-
+		return null;
 	}
 
+	public Product updateProduct(Product product)
+	{
+		return null;
+	}
+
+	public Product changeProductStatus(Product product)
+	{
+		return null;
+	}
 }

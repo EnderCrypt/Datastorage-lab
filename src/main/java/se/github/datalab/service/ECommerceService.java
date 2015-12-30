@@ -15,9 +15,10 @@ public class ECommerceService
 	private ProductRepository prodRepo;
 	private OrderRepository orderRepo;
 
-	// public final OrderCategory order = new OrderCategory();
+	public final UserCategory user = new UserCategory();
+	public final OrderCategory order = new OrderCategory();
+	public final ProductCategory product = new ProductCategory();
 
-	// TODO: make eCommerce take in unlimited amount of repositories
 	// TODO: Check doc file to see which methods/operations eCom needs to have
 	// toward the database
 	public ECommerceService(UserRepository userRepo, ProductRepository prodRepo, OrderRepository orderRepo)
@@ -27,91 +28,102 @@ public class ECommerceService
 		this.orderRepo = orderRepo;
 	}
 
-	// ----------- USER---------
-
-	public void addUser(User user)
+	public class UserCategory// ----------- USER---------
 	{
+		public void add(User user)
+		{
+			// TODO Auto-generated method stub
+		}
+
+		public User getById(Long id)
+		{
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		public List<User> getAll()
+		{
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		public User getByUsername(String username)
+		{
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		public User update(User user)
+		{
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		public void changeStatus(User user)
+		{
+			// TODO Auto-generated method stub
+		}
 	}
 
-	public List<User> getAllUsers(User user)
+	public class OrderCategory // -------------ORDER---------
 	{
-		// return new ArrayList<>(userRepo.getAll);
-		return null;
+
+		public void add(Order order)
+		{
+			// TODO Auto-generated method stub
+		}
+
+		public Order getById(Long id)
+		{
+			return orderRepo.getById(id);
+		}
+
+		public List<Order> getAll()
+		{
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		public List<Order> getByUser(User user)
+		{
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		public void changeStatus(Order order)
+		{
+			// TODO Auto-generated method stub
+		}
 	}
 
-	public User getUserById(Long id)
+	public class ProductCategory // ------------PRODUCT------------
 	{
-		return userRepo.getById(id);
-	}
+		public void add(Product product)
+		{
+			// TODO Auto-generated method stub
+		}
 
-	public User getUsername(String username)
-	{
-		return null;
-	}
+		public Product getById(Product product)
+		{
+			// TODO Auto-generated method stub
+			return null;
+		}
 
-	public User createUser(User user)
-	{
-		return null;
-	}
+		public List<Product> getAll()
+		{
+			// TODO Auto-generated method stub
+			return null;
+		}
 
-	public User updateUser(User user)
-	{
-		return null;
-	}
+		public Product update(Product product)
+		{
+			// TODO Auto-generated method stub
+			return null;
+		}
 
-	public User changeUserStatus(User user)
-	{
-		return null;
-	}
-
-	// -------------ORDER---------
-
-	public void addOrder(Order order)
-	{
-	}
-
-	public Order getOrderById(Long id)
-	{
-		return orderRepo.getById(id);
-	}
-
-	public List<Order> getAllOrders(Order order)
-	{
-		return null;
-	}
-
-	public List<Order> getAllOrderByUsername(User user)
-	{
-		return null;
-	}
-
-	// ------------PRODUCT------------
-	public void addProduct(Product product)
-	{
-	}
-
-	public Product getProductById(Product product)
-	{
-		return null;
-	}
-
-	public Product getAllProducts(Product product)
-	{
-		return null;
-	}
-
-	public Product getProductName(Product product)
-	{
-		return null;
-	}
-
-	public Product updateProduct(Product product)
-	{
-		return null;
-	}
-
-	public Product changeProductStatus(Product product)
-	{
-		return null;
+		public void changeStatus(Product product)
+		{
+			// TODO Auto-generated method stub
+		}
 	}
 }

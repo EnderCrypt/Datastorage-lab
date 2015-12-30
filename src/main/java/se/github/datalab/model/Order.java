@@ -8,49 +8,56 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import se.github.datalab.statuses.OrderStatus;
+
 @NamedQueries(value = {
-			@NamedQuery(name = "Order.GetAll", query = "SELECT o FROM Order o"),
-			@NamedQuery(name = "Order.GetOrderById", query = "SELECT o FROM Order o WHERE Id = ???"),
-			//@NamedQuery(name = "Order.GetOrderFromUser", query = "SELECT o FROM Order o WHERE")
+		@NamedQuery(name = "Order.GetAll", query = "SELECT o FROM Order o"),
+		@NamedQuery(name = "Order.GetOrderById", query = "SELECT o FROM Order o WHERE Id = :id"),
+		@NamedQuery(name = "Order.GetOrderByStatus", query = "SELECT o FROM Order o WHERE orderStatus = ?status")
 })
 @Entity
-@Table(name="Orders")
+@Table(name = "Orders")
 public class Order extends Id
 {
-//	@Column(nullable = false)
-	@ManyToMany(targetEntity=Product.class)
+	// @Column(nullable = false)
+	@ManyToMany(targetEntity = Product.class)
 	private Collection<Long> productIds;
-	
+
 	private double orderCost;
-	
+
 	@Column(nullable = false)
-	private String orderStatus;
-	protected Order(){}
-	
-	public String getOrderStatus()
+	private int orderStatus;
+
+	public Order()
 	{
-		return orderStatus;
 	}
-	public void setOrderStatus(String orderStatus)
+
+	public OrderStatus getOrderStatus()
 	{
-		this.orderStatus = orderStatus;
+		return OrderStatus.values()[orderStatus];
 	}
+
+	public void setOrderStatus(OrderStatus status)
+	{
+		this.orderStatus = status.ordinal();
+	}
+
 	public Collection<Long> getProductIds()
 	{
 		return new ArrayList<>(productIds);
 	}
+
 	public Order addProduct(Product product)
 	{
 		productIds.add(product.getId());
 		return this;
 	}
+
 	public double getOrderCost()
 	{
 		return orderCost;
 	}
-	
-	
+
 }

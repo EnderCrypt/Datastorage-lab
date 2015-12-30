@@ -6,18 +6,23 @@ public interface StorageRepository<E extends Id>
 {
 	/**
 	 * Persists Entity
+	 * 
 	 * @param entity
 	 * @return
 	 */
 	E update(E entity);
+
 	/**
 	 * Removes entity
+	 * 
 	 * @param entity
 	 * @return
 	 */
 	E remove(E entity);
+
 	/**
 	 * Retrieves entity by specifying id
+	 * 
 	 * @param id
 	 * @return
 	 */

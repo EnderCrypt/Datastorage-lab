@@ -10,4 +10,6 @@ public interface OrderRepository extends StorageRepository<Order>
 	Collection<Order> getAll();
 
 	Order getByStatus(OrderStatus status);
+
+	// Collection<Order> getPremiumOrder();
 }

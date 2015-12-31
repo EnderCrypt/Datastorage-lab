@@ -9,7 +9,7 @@ import javax.persistence.TypedQuery;
 import se.github.datalab.model.User;
 import se.github.datalab.repository.UserRepository;
 
-public class JpaUserRepository extends JpaAbstractRepository<User> implements UserRepository
+public class JpaUserRepository extends JpaAbstractRepository<User>implements UserRepository
 {
 
 	public JpaUserRepository(EntityManagerFactory factory)
@@ -44,6 +44,26 @@ public class JpaUserRepository extends JpaAbstractRepository<User> implements Us
 		{
 			TypedQuery<User> result = manager.createNamedQuery("User.GetUserByEmail", User.class);
 			result.setParameter("email", email);
+			return result.getResultList().get(0);
+		}
+		catch (IllegalArgumentException e)
+		{
+			throw new RuntimeException();
+		}
+		finally
+		{
+			manager.close();
+		}
+	}
+
+	@Override
+	public User getUsername(String username)
+	{
+		EntityManager manager = factory.createEntityManager();
+		try
+		{
+			TypedQuery<User> result = manager.createNamedQuery("User.GetUserByUsername", User.class);
+			result.setParameter("username", username);
 			return result.getResultList().get(0);
 		}
 		catch (IllegalArgumentException e)

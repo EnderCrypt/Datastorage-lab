@@ -1,5 +1,6 @@
 package se.github.datalab.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import se.github.datalab.model.Order;
@@ -37,26 +38,22 @@ public class ECommerceService
 
 		public User getById(Long id)
 		{
-			// TODO Auto-generated method stub
-			return null;
+			return userRepo.getById(id);
 		}
 
 		public List<User> getAll()
 		{
-			// TODO Auto-generated method stub
-			return null;
+			return new ArrayList<>(userRepo.getAll());
 		}
 
 		public User getByUsername(String username)
 		{
-			// TODO Auto-generated method stub
-			return null;
+			return userRepo.getUsername(username);
 		}
 
-		public User update(User user)
+		public User updateUser(User user)
 		{
-			// TODO Auto-generated method stub
-			return null;
+			return userRepo.update(user);
 		}
 
 		public void changeStatus(User user)
@@ -80,14 +77,33 @@ public class ECommerceService
 
 		public List<Order> getAll()
 		{
+			return new ArrayList<>(orderRepo.getAll());
+		}
+
+		public List<Order> getAllOrderFromUser(User user)
+		{
 			// TODO Auto-generated method stub
 			return null;
 		}
 
-		public List<Order> getByUser(User user)
+		public List<Order> getAllOrderFromStatus()
 		{
 			// TODO Auto-generated method stub
 			return null;
+		}
+
+		public List<Order> getHighValueOrders(Order order)
+		{
+			if (order.getOrderCost() > 10000)
+			{
+				// return new ArrayList<>(orderRepo.getPremiumOrder);
+			}
+			return null;
+		}
+
+		public Order updateOrder(Order order)
+		{
+			return orderRepo.update(order);
 		}
 
 		public void changeStatus(Order order)
@@ -103,19 +119,22 @@ public class ECommerceService
 			// TODO Auto-generated method stub
 		}
 
-		public Product getById(Product product)
+		public Product getById(Long id)
 		{
-			// TODO Auto-generated method stub
-			return null;
+			return prodRepo.getById(id);
 		}
 
 		public List<Product> getAll()
 		{
-			// TODO Auto-generated method stub
-			return null;
+			return new ArrayList<>(prodRepo.getAll());
 		}
 
-		public Product update(Product product)
+		public Product getProductName(String name)
+		{
+			return prodRepo.getProduct(name);
+		}
+
+		public Product updateProduct(Product product)
 		{
 			// TODO Auto-generated method stub
 			return null;

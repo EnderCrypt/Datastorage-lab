@@ -22,6 +22,7 @@ public class ECommerceService
 
 	// TODO: Check doc file to see which methods/operations eCom needs to have
 	// toward the database
+	//
 	public ECommerceService(UserRepository userRepo, ProductRepository prodRepo, OrderRepository orderRepo)
 	{
 		this.userRepo = userRepo;
@@ -48,7 +49,7 @@ public class ECommerceService
 
 		public User getByUsername(String username)
 		{
-			return userRepo.getUsername(username);
+			return userRepo.getByUsername(username);
 		}
 
 		public User updateUser(User user)
@@ -136,8 +137,7 @@ public class ECommerceService
 
 		public Product updateProduct(Product product)
 		{
-			// TODO Auto-generated method stub
-			return null;
+			return prodRepo.update(product);
 		}
 
 		public void changeStatus(Product product)

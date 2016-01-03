@@ -1,6 +1,7 @@
 package se.github.datalab.repository.jpastorage;
 
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -37,16 +38,35 @@ public class JpaOrderRepository extends JpaAbstractRepository<Order> implements 
 		}
 	}
 
-	// eCom.getByStatus(OrderStatus.CANCELLED)
 	@Override
-	public Order getByStatus(OrderStatus status)
+	public List<Order> getByStatus(OrderStatus status)
 	{
 		EntityManager manager = factory.createEntityManager();
 		try
 		{
 			TypedQuery<Order> result = manager.createNamedQuery("Order.GetOrderByStatus", Order.class);
 			result.setParameter("status", status.ordinal());
-			return result.getResultList().get(0);
+			return result.getResultList();
+		}
+		catch (IllegalArgumentException e)
+		{
+			throw new RuntimeException(e);
+		}
+		finally
+		{
+			manager.close();
+		}
+	}
+
+	@Override
+	public Collection<Order> getByMinCost(double price)
+	{
+		EntityManager manager = factory.createEntityManager();
+		try
+		{
+			TypedQuery<Order> result = manager.createNamedQuery("Order.GetOrderByMinCost", Order.class);
+			result.setParameter("cost", price);
+			return result.getResultList();
 		}
 		catch (IllegalArgumentException e)
 		{

@@ -9,10 +9,10 @@ import se.github.datalab.statuses.ProductStatus;
 
 @NamedQueries(value = {
 		@NamedQuery(name = "Product.GetAll", query = "SELECT p FROM Product p"),
-		@NamedQuery(name = "Product.GetProductById", query = "SELECT p FROM Product WHERE p.Id = :id"),
-		@NamedQuery(name = "Product.GetProduct", query = "SELECT p FROM Product WHERE p.name = :name"),
+		//		@NamedQuery(name = "Product.GetProductById", query = "SELECT p FROM Product WHERE p.Id = :id"),
+		@NamedQuery(name = "Product.GetProduct", query = "SELECT p FROM Product WHERE p.name LIKE :name"),
 		@NamedQuery(name = "Product.GetProductByStatus", query = "SELECT p FROM Product WHERE p.productStatus = ?status"), // ? for ordinals
-		@NamedQuery(name = "Product.GetProductByCost", query = "SELECT p FROM Product WHERE p.price = :price")
+		@NamedQuery(name = "Product.GetProductByCost", query = "SELECT p FROM Product WHERE p.price LIKE :price")
 })
 @Entity
 public class Product extends Id

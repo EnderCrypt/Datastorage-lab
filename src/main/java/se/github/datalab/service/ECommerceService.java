@@ -9,6 +9,9 @@ import se.github.datalab.model.User;
 import se.github.datalab.repository.OrderRepository;
 import se.github.datalab.repository.ProductRepository;
 import se.github.datalab.repository.UserRepository;
+import se.github.datalab.statuses.OrderStatus;
+import se.github.datalab.statuses.ProductStatus;
+import se.github.datalab.statuses.UserStatus;
 
 public class ECommerceService
 {
@@ -32,12 +35,12 @@ public class ECommerceService
 
 	public class UserCategory// ----------- USER---------
 	{
-		public void add(User user)
+		public User add(User user)
 		{
-			// TODO Auto-generated method stub
+			return userRepo.update(user);
 		}
 
-		public User getById(Long id)
+		public User getBy(Long id)
 		{
 			return userRepo.getById(id);
 		}
@@ -47,31 +50,31 @@ public class ECommerceService
 			return new ArrayList<>(userRepo.getAll());
 		}
 
-		public User getByUsername(String username)
+		public User getBy(String username)
 		{
 			return userRepo.getByUsername(username);
 		}
 
-		public User updateUser(User user)
+		public void changeStatus(User user, UserStatus status)
 		{
-			return userRepo.update(user);
-		}
-
-		public void changeStatus(User user)
-		{
-			// TODO Auto-generated method stub
+			user.setUserStatus(status);
+			userRepo.update(user);
 		}
 	}
 
 	public class OrderCategory // -------------ORDER---------
 	{
 
-		public void add(Order order)
+		public Order add(Order order)
 		{
-			// TODO Auto-generated method stub
+			if (order.getProductIds().isEmpty())
+			{
+				throw new IllegalArgumentException("Cannot add empty order");
+			}
+			return orderRepo.update(order);
 		}
 
-		public Order getById(Long id)
+		public Order getBy(Long id)
 		{
 			return orderRepo.getById(id);
 		}
@@ -81,46 +84,41 @@ public class ECommerceService
 			return new ArrayList<>(orderRepo.getAll());
 		}
 
-		public List<Order> getAllOrderFromUser(User user)
+		public List<Order> getBy(User user)
 		{
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		public List<Order> getAllOrderFromStatus()
-		{
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		public List<Order> getHighValueOrders(Order order)
-		{
-			if (order.getOrderCost() > 10000)
+			List<Order> allOrders = new ArrayList<>();
+			for (Long id : user.getOrderIds())
 			{
-				// return new ArrayList<>(orderRepo.getPremiumOrder);
+				allOrders.add(orderRepo.getById(id));
 			}
-			return null;
+			return new ArrayList<>(allOrders);
 		}
 
-		public Order updateOrder(Order order)
+		public List<Order> getBy(OrderStatus status)
 		{
-			return orderRepo.update(order);
+			return new ArrayList<>(orderRepo.getByStatus(status));
 		}
 
-		public void changeStatus(Order order)
+		public List<Order> getBy(double price)
 		{
-			// TODO Auto-generated method stub
+			return new ArrayList<>(orderRepo.getByMinCost(price));
+		}
+
+		public void changeStatus(Order order, OrderStatus status)
+		{
+			order.setOrderStatus(status);
+			orderRepo.update(order);
 		}
 	}
 
 	public class ProductCategory // ------------PRODUCT------------
 	{
-		public void add(Product product)
+		public Product add(Product product)
 		{
-			// TODO Auto-generated method stub
+			return prodRepo.update(product);
 		}
 
-		public Product getById(Long id)
+		public Product getBy(Long id)
 		{
 			return prodRepo.getById(id);
 		}
@@ -130,19 +128,15 @@ public class ECommerceService
 			return new ArrayList<>(prodRepo.getAll());
 		}
 
-		public Product getProductName(String name)
+		public List<Product> getBy(String name)
 		{
-			return prodRepo.getProduct(name);
+			return new ArrayList<>(prodRepo.getProduct(name.toLowerCase()));
 		}
 
-		public Product updateProduct(Product product)
+		public void changeStatus(Product product, ProductStatus status)
 		{
-			return prodRepo.update(product);
-		}
-
-		public void changeStatus(Product product)
-		{
-			// TODO Auto-generated method stub
+			product.setProductStatus(status);
+			prodRepo.update(product);
 		}
 	}
 }

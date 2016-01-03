@@ -13,9 +13,10 @@ import javax.persistence.Table;
 import se.github.datalab.statuses.OrderStatus;
 
 @NamedQueries(value = {
-		@NamedQuery(name = "Order.GetAll", query = "SELECT o FROM Order o"),
-		@NamedQuery(name = "Order.GetOrderById", query = "SELECT o FROM Order o WHERE Id = :id"),
-		@NamedQuery(name = "Order.GetOrderByStatus", query = "SELECT o FROM Order o WHERE orderStatus = ?status")
+		@NamedQuery(name = "Order.GetAll", query = "SELECT o FROM Orders o"),
+		//		@NamedQuery(name = "Order.GetOrderById", query = "SELECT o FROM Order o WHERE Id = :id"),
+		@NamedQuery(name = "Order.GetOrderByStatus", query = "SELECT o FROM Orders o WHERE o.orderStatus = ?status"),
+		@NamedQuery(name = "Order.GetOrderByMinCost", query = "SELECT o FROM Orders o WHERE o.orderCost >= :cost")
 })
 @Entity
 @Table(name = "Orders")

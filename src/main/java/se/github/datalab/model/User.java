@@ -12,8 +12,7 @@ import javax.persistence.OneToMany;
 import se.github.datalab.statuses.UserStatus;
 
 @NamedQueries(value = {
-		@NamedQuery(name = "User.GetAll", query = "SELECT u FROM User e"),
-		@NamedQuery(name = "User.GetUserById", query = "SELECT u FROM User u WHERE u.Id = :id"),
+		@NamedQuery(name = "User.GetAll", query = "SELECT u FROM User u"),
 		@NamedQuery(name = "User.GetUserByUsername", query = "SELECT u FROM User u WHERE u.username = :username"),
 		@NamedQuery(name = "User.GetUserByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
 		@NamedQuery(name = "User.GetUserByStatus", query = "SELECT u FROM User u WHERE u.userStatus = ?status")

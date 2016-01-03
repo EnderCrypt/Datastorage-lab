@@ -21,12 +21,13 @@ public abstract class JpaAbstractRepository<E extends Id> implements StorageRepo
 	public E update(E entity)
 	{
 		EntityManager manager = factory.createEntityManager();
-		if (entity.getId() == null)
+		if (entity.hasId())
 		{
-			manager.persist(entity);
+			manager.merge(entity);
+			manager.close();
 			return entity;
 		}
-		manager.merge(entity);
+		manager.persist(entity);
 		manager.close();
 		return entity;
 

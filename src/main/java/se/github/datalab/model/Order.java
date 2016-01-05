@@ -1,13 +1,14 @@
 package se.github.datalab.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.FetchType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import se.github.datalab.statuses.OrderStatus;
@@ -22,7 +23,7 @@ import se.github.datalab.statuses.OrderStatus;
 public class Order extends Id
 {
 	// @Column(nullable = false)
-	@ManyToMany
+	@OneToMany(fetch = FetchType.EAGER)
 	private Collection<Product> products;
 
 	private double orderCost;
@@ -32,7 +33,7 @@ public class Order extends Id
 
 	public Order()
 	{
-		products = new HashSet<>();
+		products = new ArrayList<>();
 	}
 
 	public OrderStatus getOrderStatus()
@@ -47,18 +48,25 @@ public class Order extends Id
 
 	public Collection<Product> getProducts()
 	{
-		return new HashSet<>(products);
+		return new ArrayList<>(products);
 	}
 
 	public Order addProduct(Product product)
 	{
 		products.add(product);
+		orderCost += product.getPrice();
 		return this;
 	}
 
 	public double getOrderCost()
 	{
 		return orderCost;
+	}
+
+	@Override
+	public String toString()
+	{
+		return id + ":" + products.toString() + ":" + orderCost + ":" + orderStatus;
 	}
 
 }

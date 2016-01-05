@@ -93,4 +93,10 @@ public class Product extends Id
 		else if (!name.equals(other.name)) return false;
 		return true;
 	}
+
+	@Override
+	public String toString()
+	{
+		return id + ":" + name + ":" + price + ":" + productStatus;
+	}
 }

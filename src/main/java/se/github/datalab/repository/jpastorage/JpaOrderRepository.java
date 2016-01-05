@@ -23,9 +23,10 @@ public class JpaOrderRepository extends JpaAbstractRepository<Order> implements 
 	public Collection<Order> getAll()
 	{
 		EntityManager manager = factory.createEntityManager();
+		manager.getTransaction().begin();
 		try
 		{
-			TypedQuery<Order> result = manager.createNamedQuery("Order.GetAll", Order.class);
+			TypedQuery<Order> result = manager.createNamedQuery("Orders.GetAll", Order.class);
 			return result.getResultList();
 		}
 		catch (IllegalArgumentException e)
@@ -34,6 +35,7 @@ public class JpaOrderRepository extends JpaAbstractRepository<Order> implements 
 		}
 		finally
 		{
+			manager.getTransaction().commit();
 			manager.close();
 		}
 	}
@@ -42,9 +44,10 @@ public class JpaOrderRepository extends JpaAbstractRepository<Order> implements 
 	public List<Order> getByStatus(OrderStatus status)
 	{
 		EntityManager manager = factory.createEntityManager();
+		manager.getTransaction().begin();
 		try
 		{
-			TypedQuery<Order> result = manager.createNamedQuery("Order.GetOrderByStatus", Order.class);
+			TypedQuery<Order> result = manager.createNamedQuery("Orders.GetOrderByStatus", Order.class);
 			result.setParameter("status", status.ordinal());
 			return result.getResultList();
 		}
@@ -54,6 +57,7 @@ public class JpaOrderRepository extends JpaAbstractRepository<Order> implements 
 		}
 		finally
 		{
+			manager.getTransaction().commit();
 			manager.close();
 		}
 	}
@@ -62,9 +66,10 @@ public class JpaOrderRepository extends JpaAbstractRepository<Order> implements 
 	public Collection<Order> getByMinCost(double price)
 	{
 		EntityManager manager = factory.createEntityManager();
+		manager.getTransaction().begin();
 		try
 		{
-			TypedQuery<Order> result = manager.createNamedQuery("Order.GetOrderByMinCost", Order.class);
+			TypedQuery<Order> result = manager.createNamedQuery("Orders.GetOrderByMinCost", Order.class);
 			result.setParameter("cost", price);
 			return result.getResultList();
 		}
@@ -74,6 +79,7 @@ public class JpaOrderRepository extends JpaAbstractRepository<Order> implements 
 		}
 		finally
 		{
+			manager.getTransaction().commit();
 			manager.close();
 		}
 	}

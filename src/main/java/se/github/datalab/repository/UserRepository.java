@@ -9,9 +9,9 @@ public interface UserRepository extends StorageRepository<User>
 {
 	Collection<User> getAll();
 
-	Collection<User> getUserByStatus(UserStatus status);
+	Collection<User> getByStatus(UserStatus status);
 
-	User getUserByEmail(String email);
+	User getByEmail(String email);
 
 	User getByUsername(String username);
 

@@ -10,7 +10,7 @@
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<properties>
 
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/Datastorage_lab" />
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/Datastorage-lab" />
 			<property name="javax.persistence.jdbc.user" value="melent" />
 			<property name="javax.persistence.jdbc.password" value="654321" />
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />

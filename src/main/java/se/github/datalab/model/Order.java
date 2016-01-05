@@ -1,7 +1,7 @@
 package se.github.datalab.model;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,26 +13,26 @@ import javax.persistence.Table;
 import se.github.datalab.statuses.OrderStatus;
 
 @NamedQueries(value = {
-		@NamedQuery(name = "Order.GetAll", query = "SELECT o FROM Orders o"),
-		//		@NamedQuery(name = "Order.GetOrderById", query = "SELECT o FROM Order o WHERE Id = :id"),
-		@NamedQuery(name = "Order.GetOrderByStatus", query = "SELECT o FROM Orders o WHERE o.orderStatus = ?status"),
-		@NamedQuery(name = "Order.GetOrderByMinCost", query = "SELECT o FROM Orders o WHERE o.orderCost >= :cost")
+		@NamedQuery(name = "Orders.GetAll", query = "SELECT o FROM Order o"),
+		@NamedQuery(name = "Orders.GetOrderByStatus", query = "SELECT o FROM Order o WHERE o.orderStatus = :status"),
+		@NamedQuery(name = "Orders.GetOrderByMinCost", query = "SELECT o FROM Order o WHERE o.orderCost >= :cost")
 })
 @Entity
 @Table(name = "Orders")
 public class Order extends Id
 {
 	// @Column(nullable = false)
-	@ManyToMany(targetEntity = Product.class)
-	private Collection<Long> productIds;
+	@ManyToMany
+	private Collection<Product> products;
 
 	private double orderCost;
 
-	@Column(nullable = false)
+	@Column(name = "order_status", nullable = false)
 	private int orderStatus;
 
 	public Order()
 	{
+		products = new HashSet<>();
 	}
 
 	public OrderStatus getOrderStatus()
@@ -45,14 +45,14 @@ public class Order extends Id
 		this.orderStatus = status.ordinal();
 	}
 
-	public Collection<Long> getProductIds()
+	public Collection<Product> getProducts()
 	{
-		return new ArrayList<>(productIds);
+		return new HashSet<>(products);
 	}
 
 	public Order addProduct(Product product)
 	{
-		productIds.add(product.getId());
+		products.add(product);
 		return this;
 	}
 

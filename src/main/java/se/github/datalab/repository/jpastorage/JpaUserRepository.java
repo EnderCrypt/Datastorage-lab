@@ -39,7 +39,7 @@ public class JpaUserRepository extends JpaAbstractRepository<User> implements Us
 	}
 
 	@Override
-	public User getUserByEmail(String email)
+	public User getByEmail(String email)
 	{
 		EntityManager manager = factory.createEntityManager();
 		try
@@ -79,7 +79,7 @@ public class JpaUserRepository extends JpaAbstractRepository<User> implements Us
 	}
 
 	@Override
-	public List<User> getUserByStatus(UserStatus status)
+	public List<User> getByStatus(UserStatus status)
 	{
 		EntityManager manager = factory.createEntityManager();
 		try

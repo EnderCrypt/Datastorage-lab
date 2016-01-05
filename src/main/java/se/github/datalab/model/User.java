@@ -15,7 +15,7 @@ import se.github.datalab.statuses.UserStatus;
 		@NamedQuery(name = "User.GetAll", query = "SELECT u FROM User u"),
 		@NamedQuery(name = "User.GetUserByUsername", query = "SELECT u FROM User u WHERE u.username = :username"),
 		@NamedQuery(name = "User.GetUserByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
-		@NamedQuery(name = "User.GetUserByStatus", query = "SELECT u FROM User u WHERE u.userStatus = ?status")
+		@NamedQuery(name = "User.GetUserByStatus", query = "SELECT u FROM User u WHERE u.userStatus = :status")
 })
 @Entity
 public class User extends Id
@@ -25,8 +25,9 @@ public class User extends Id
 	private String password;
 	@Column(nullable = false)
 	private String email;
-	@OneToMany(targetEntity = Order.class)
-	private Collection<Long> orderIds;
+	@OneToMany
+	private Collection<Order> orders;
+	@Column(name = "user_status", nullable = false)
 	private int userStatus;
 
 	protected User()
@@ -38,6 +39,7 @@ public class User extends Id
 		this.username = username;
 		this.password = password;
 		this.email = email;
+		orders = new HashSet<>();
 	}
 
 	public String getPassword()
@@ -65,14 +67,14 @@ public class User extends Id
 		return username;
 	}
 
-	public Collection<Long> getOrderIds()
+	public Collection<Order> getOrders()
 	{
-		return new HashSet<>(orderIds);
+		return new HashSet<>(orders);
 	}
 
 	public User addOrder(Order order)
 	{
-		orderIds.add(order.getId());
+		orders.add(order);
 		return this;
 	}
 
@@ -114,5 +116,11 @@ public class User extends Id
 		}
 		else if (!username.equals(other.username)) return false;
 		return true;
+	}
+
+	@Override
+	public String toString()
+	{
+		return id + ":" + username + ":" + email + ":" + userStatus;
 	}
 }

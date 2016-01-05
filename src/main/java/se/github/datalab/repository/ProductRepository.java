@@ -9,10 +9,10 @@ public interface ProductRepository extends StorageRepository<Product>
 {
 	Collection<Product> getAll();
 
-	Collection<Product> getProduct(String name);
+	Collection<Product> getByName(String name);
 
-	Collection<Product> getProductByStatus(ProductStatus status);
+	Collection<Product> getByStatus(ProductStatus status);
 
-	Collection<Product> getProductByCost(double price);
+	Collection<Product> getByCost(double price);
 
 }

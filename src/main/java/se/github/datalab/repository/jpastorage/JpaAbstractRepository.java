@@ -21,13 +21,16 @@ public abstract class JpaAbstractRepository<E extends Id> implements StorageRepo
 	public E update(E entity)
 	{
 		EntityManager manager = factory.createEntityManager();
+		manager.getTransaction().begin();
 		if (entity.hasId())
 		{
 			manager.merge(entity);
+			manager.getTransaction().commit();
 			manager.close();
 			return entity;
 		}
 		manager.persist(entity);
+		manager.getTransaction().commit();
 		manager.close();
 		return entity;
 
@@ -37,7 +40,9 @@ public abstract class JpaAbstractRepository<E extends Id> implements StorageRepo
 	public E remove(E entity)
 	{
 		EntityManager manager = factory.createEntityManager();
+		manager.getTransaction().begin();
 		manager.remove(entity);
+		manager.getTransaction().commit();
 		manager.close();
 		return entity;
 	}
@@ -46,6 +51,7 @@ public abstract class JpaAbstractRepository<E extends Id> implements StorageRepo
 	public E getById(Long id)
 	{
 		EntityManager manager = factory.createEntityManager();
+		manager.getTransaction().begin();
 		try
 		{
 			return manager.find(entityClass, id);
@@ -56,6 +62,7 @@ public abstract class JpaAbstractRepository<E extends Id> implements StorageRepo
 		}
 		finally
 		{
+			manager.getTransaction().commit();
 			manager.close();
 		}
 	}

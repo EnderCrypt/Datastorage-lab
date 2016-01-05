@@ -39,7 +39,7 @@ public class JpaProductRepository extends JpaAbstractRepository<Product> impleme
 	}
 
 	@Override
-	public List<Product> getProduct(String name)
+	public List<Product> getByName(String name)
 	{
 		EntityManager manager = factory.createEntityManager();
 		try
@@ -59,7 +59,7 @@ public class JpaProductRepository extends JpaAbstractRepository<Product> impleme
 	}
 
 	@Override
-	public List<Product> getProductByStatus(ProductStatus status)
+	public List<Product> getByStatus(ProductStatus status)
 	{
 		EntityManager manager = factory.createEntityManager();
 		try
@@ -79,7 +79,7 @@ public class JpaProductRepository extends JpaAbstractRepository<Product> impleme
 	}
 
 	@Override
-	public List<Product> getProductByCost(double price)
+	public List<Product> getByCost(double price)
 	{
 		EntityManager manager = factory.createEntityManager();
 		try

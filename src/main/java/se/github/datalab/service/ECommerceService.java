@@ -55,6 +55,11 @@ public class ECommerceService
 			return userRepo.getByUsername(username);
 		}
 
+		public List<User> getBy(UserStatus status)
+		{
+			return new ArrayList<>(userRepo.getByStatus(status));
+		}
+
 		public void changeStatus(User user, UserStatus status)
 		{
 			user.setUserStatus(status);
@@ -67,7 +72,7 @@ public class ECommerceService
 
 		public Order add(Order order)
 		{
-			if (order.getProductIds().isEmpty())
+			if (order.getProducts().isEmpty())
 			{
 				throw new IllegalArgumentException("Cannot add empty order");
 			}
@@ -87,9 +92,9 @@ public class ECommerceService
 		public List<Order> getBy(User user)
 		{
 			List<Order> allOrders = new ArrayList<>();
-			for (Long id : user.getOrderIds())
+			for (Order order : user.getOrders())
 			{
-				allOrders.add(orderRepo.getById(id));
+				allOrders.add(orderRepo.getById(order.getId()));
 			}
 			return new ArrayList<>(allOrders);
 		}
@@ -130,7 +135,7 @@ public class ECommerceService
 
 		public List<Product> getBy(String name)
 		{
-			return new ArrayList<>(prodRepo.getProduct(name.toLowerCase()));
+			return new ArrayList<>(prodRepo.getByName(name.toLowerCase()));
 		}
 
 		public void changeStatus(Product product, ProductStatus status)

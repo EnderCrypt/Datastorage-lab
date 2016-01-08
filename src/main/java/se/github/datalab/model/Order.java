@@ -6,6 +6,7 @@ import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -25,6 +26,9 @@ public class Order extends Id
 	// @Column(nullable = false)
 	@OneToMany(fetch = FetchType.EAGER)
 	private Collection<Product> products;
+
+	@ManyToOne
+	private User buyer;
 
 	private double orderCost;
 
@@ -61,6 +65,16 @@ public class Order extends Id
 	public double getOrderCost()
 	{
 		return orderCost;
+	}
+
+	public User getBuyer()
+	{
+		return buyer;
+	}
+
+	public User setBuyer(User buyer)
+	{
+		return this.buyer = buyer;
 	}
 
 	@Override

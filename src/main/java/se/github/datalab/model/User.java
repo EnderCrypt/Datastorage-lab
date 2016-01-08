@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import se.github.datalab.statuses.UserStatus;
 
@@ -25,6 +26,7 @@ public class User extends Id
 	private String password;
 	@Column(nullable = false)
 	private String email;
+	@Transient
 	@OneToMany
 	private Collection<Order> orders;
 	@Column(name = "user_status", nullable = false)
@@ -74,6 +76,7 @@ public class User extends Id
 
 	public User addOrder(Order order)
 	{
+		order.setBuyer(this);
 		orders.add(order);
 		return this;
 	}

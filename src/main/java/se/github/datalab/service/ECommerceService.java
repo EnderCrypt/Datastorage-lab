@@ -40,6 +40,11 @@ public class ECommerceService
 			return userRepo.update(user);
 		}
 
+		public User remove(User user)
+		{
+			return userRepo.remove(user);
+		}
+
 		public User getBy(Long id)
 		{
 			return userRepo.getById(id);
@@ -77,6 +82,11 @@ public class ECommerceService
 				throw new IllegalArgumentException("Cannot add empty order");
 			}
 			return orderRepo.update(order);
+		}
+
+		public Order remove(Order order)
+		{
+			return orderRepo.remove(order);
 		}
 
 		public Order getBy(Long id)
@@ -121,6 +131,11 @@ public class ECommerceService
 		public Product add(Product product)
 		{
 			return prodRepo.update(product);
+		}
+
+		public Product remove(Product product)
+		{
+			return prodRepo.remove(product);
 		}
 
 		public Product getBy(Long id)

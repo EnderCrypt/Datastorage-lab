@@ -55,6 +55,7 @@ public class Main
 		eCom.user.getBy(UserStatus.ADMIN).forEach(System.out::println);
 		eCom.order.getBy(90).forEach(System.out::println);
 		eCom.order.getBy(user1).forEach(System.out::println);
+		eCom.product.getBy("hard").forEach(System.out::println);
 
 	}
 }

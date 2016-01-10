@@ -45,7 +45,7 @@ public class JpaProductRepository extends JpaAbstractRepository<Product> impleme
 		try
 		{
 			TypedQuery<Product> result = manager.createNamedQuery("Product.GetProduct", Product.class);
-			result.setParameter("name", name);
+			result.setParameter("name", "%" + name + "%");
 			return result.getResultList();
 		}
 		catch (IllegalArgumentException e)

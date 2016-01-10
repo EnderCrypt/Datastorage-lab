@@ -41,7 +41,7 @@ public abstract class JpaAbstractRepository<E extends Id> implements StorageRepo
 	{
 		EntityManager manager = factory.createEntityManager();
 		manager.getTransaction().begin();
-		manager.remove(entity);
+		manager.remove(manager.contains(entity) ? entity : manager.merge(entity));
 		manager.getTransaction().commit();
 		manager.close();
 		return entity;

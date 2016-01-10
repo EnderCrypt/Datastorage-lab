@@ -10,7 +10,7 @@ import se.github.datalab.statuses.ProductStatus;
 @NamedQueries(value = {
 		@NamedQuery(name = "Product.GetAll", query = "SELECT p FROM Product p"),
 		//		@NamedQuery(name = "Product.GetProductById", query = "SELECT p FROM Product WHERE p.Id = :id"),
-		@NamedQuery(name = "Product.GetProduct", query = "SELECT p FROM Product p WHERE p.name LIKE :name"),
+		@NamedQuery(name = "Product.GetProduct", query = "SELECT p FROM Product p WHERE p.name LIKE :name ORDER BY p.name ASC"),
 		@NamedQuery(name = "Product.GetProductByStatus", query = "SELECT p FROM Product p WHERE p.productStatus = :status"), // ? for ordinals
 		@NamedQuery(name = "Product.GetProductByCost", query = "SELECT p FROM Product p WHERE p.price LIKE :price")
 })

@@ -12,7 +12,7 @@ public interface OrderRepository extends StorageRepository<Order>
 
 	Collection<Order> getByStatus(OrderStatus status);
 
-	Collection<Order> getByMinCost(double price);
+	Collection<Order> getByTotalCost(double price);
 
 	Collection<Order> getByUser(User user);
 }

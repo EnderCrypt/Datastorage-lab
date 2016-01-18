@@ -49,7 +49,7 @@ public class JpaOrderRepository extends JpaAbstractRepository<Order> implements 
 	}
 
 	@Override
-	public Collection<Order> getByMinCost(double price)
+	public Collection<Order> getByTotalCost(double price)
 	{
 		EntityManager manager = factory.createEntityManager();
 		try

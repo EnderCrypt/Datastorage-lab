@@ -49,6 +49,35 @@ public class ECommerceServiceTest
 	}
 
 	@Test
+	public void canRetrieveUserById()
+	{
+		User validUser2 = new User("rickyTang", "loves2spooge", "melenti@soittotale.fin");
+		userRepo.update(validUser2);
+		assertThat(eCom.user.getBy(validUser2.getId()), equalTo(validUser2));
+	}
+
+	@Test
+	public void canRetrieveProductById()
+	{
+		Product validProduct2 = new Product("ViberMaster", "Muscular relaxation", 66.69);
+		prodRepo.update(validProduct2);
+		assertThat(eCom.product.getBy(validProduct2.getId()), equalTo(validProduct2));
+	}
+
+	@Test
+	public void canRetrieveOrderById()
+	{
+		validOrder1.setBuyer(validUser1);
+		validOrder1.addProduct(validProduct1);
+
+		prodRepo.update(validProduct1);
+		userRepo.update(validUser1);
+		orderRepo.update(validOrder1);
+
+		assertThat(eCom.order.getBy(validOrder1.getId()), equalTo(validOrder1));
+	}
+
+	@Test
 	public void canAddUserAndRetrieveByUsername()
 	{
 		userRepo.update(validUser1);
@@ -61,7 +90,7 @@ public class ECommerceServiceTest
 	{
 		prodRepo.update(validProduct1);
 
-		assertThat(eCom.product.getBy(validProduct1.getName()).get(0), equalTo(validProduct1));
+		assertThat(eCom.product.getBy("Ever").get(0), equalTo(validProduct1));
 	}
 
 	@Test
@@ -94,14 +123,6 @@ public class ECommerceServiceTest
 	}
 
 	@Test
-	public void canRetrieveProductByName()
-	{
-		Product validProduct2 = new Product("MacBookPro", "Fantasia deluxe 2.0", 95.99);
-		prodRepo.update(validProduct2);
-		assertThat(eCom.product.getBy("MacBook").get(0), equalTo(validProduct2));
-	}
-
-	@Test
 	public void canRetrieveProductByStatus()
 	{
 		eCom.product.changeStatus(validProduct1, ProductStatus.OUT_OF_STOCK);
@@ -129,7 +150,7 @@ public class ECommerceServiceTest
 		prodRepo.update(validProduct2);
 		prodRepo.update(validProduct3);
 		orderRepo.update(validOrder2);
-
+		//4.95+0.95=5.9
 		assertThat(eCom.order.getBy(5.9).get(0), equalTo(validOrder2));
 
 		/*

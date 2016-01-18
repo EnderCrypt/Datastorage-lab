@@ -123,7 +123,7 @@ public class ECommerceService
 
 		public List<Order> getBy(double price)
 		{
-			return new ArrayList<>(orderRepo.getByMinCost(price));
+			return new ArrayList<>(orderRepo.getByTotalCost(price));
 		}
 
 		public void changeStatus(Order order, OrderStatus status)

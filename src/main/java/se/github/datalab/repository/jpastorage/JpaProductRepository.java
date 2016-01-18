@@ -22,20 +22,7 @@ public class JpaProductRepository extends JpaAbstractRepository<Product> impleme
 	@Override
 	public Collection<Product> getAll()
 	{
-		EntityManager manager = factory.createEntityManager();
-		try
-		{
-			TypedQuery<Product> result = manager.createNamedQuery("Product.GetAll", Product.class);
-			return result.getResultList();
-		}
-		catch (IllegalArgumentException e)
-		{
-			throw new RuntimeException(e);
-		}
-		finally
-		{
-			manager.close();
-		}
+		return query("Product.GetAll", Product.class);
 	}
 
 	@Override
@@ -44,13 +31,13 @@ public class JpaProductRepository extends JpaAbstractRepository<Product> impleme
 		EntityManager manager = factory.createEntityManager();
 		try
 		{
-			TypedQuery<Product> result = manager.createNamedQuery("Product.GetProduct", Product.class);
-			result.setParameter("name", "%" + name + "%");
-			return result.getResultList();
+			TypedQuery<Product> query = manager.createNamedQuery("Product.GetProduct", Product.class);
+			query.setParameter("name", "%" + name + "%");
+			return query.getResultList();
 		}
-		catch (IllegalArgumentException e)
+		catch (Exception e)
 		{
-			throw new RuntimeException(e);
+			throw new RuntimeException();
 		}
 		finally
 		{
@@ -64,18 +51,19 @@ public class JpaProductRepository extends JpaAbstractRepository<Product> impleme
 		EntityManager manager = factory.createEntityManager();
 		try
 		{
-			TypedQuery<Product> result = manager.createNamedQuery("Product.GetProductByStatus", Product.class);
+			TypedQuery<Product> result = manager.createNamedQuery("Product.GetByStatus", Product.class);
 			result.setParameter("status", status.ordinal());
 			return result.getResultList();
 		}
-		catch (IllegalArgumentException e)
+		catch (Exception e)
 		{
-			throw new RuntimeException(e);
+			e.printStackTrace();
 		}
 		finally
 		{
 			manager.close();
 		}
+		return null;
 	}
 
 	@Override
@@ -84,18 +72,19 @@ public class JpaProductRepository extends JpaAbstractRepository<Product> impleme
 		EntityManager manager = factory.createEntityManager();
 		try
 		{
-			TypedQuery<Product> result = manager.createNamedQuery("Product.GetProductByCost", Product.class);
+			TypedQuery<Product> result = manager.createNamedQuery("Product.GetByCost", Product.class);
 			result.setParameter("price", price);
 			return result.getResultList();
 		}
-		catch (IllegalArgumentException e)
+		catch (Exception e)
 		{
-			throw new RuntimeException(e);
+			e.printStackTrace();
 		}
 		finally
 		{
 			manager.close();
 		}
+		return null;
 
 	}
 

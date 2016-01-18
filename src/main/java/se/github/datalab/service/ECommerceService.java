@@ -3,6 +3,9 @@ package se.github.datalab.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import se.github.datalab.exception.IllegalOrderException;
+import se.github.datalab.exception.IllegalProductException;
+import se.github.datalab.exception.IllegalUserException;
 import se.github.datalab.model.Order;
 import se.github.datalab.model.Product;
 import se.github.datalab.model.User;
@@ -35,8 +38,12 @@ public class ECommerceService
 
 	public class UserCategory// ----------- USER---------
 	{
-		public User add(User user)
+		public User add(User user) throws IllegalUserException
 		{
+			if (user.getUsername().isEmpty())
+			{
+				throw new IllegalUserException("Username invalid!");
+			}
 			return userRepo.update(user);
 		}
 
@@ -55,9 +62,14 @@ public class ECommerceService
 			return new ArrayList<>(userRepo.getAll());
 		}
 
-		public User getBy(String username)
+		public List<User> getBy(String username)
 		{
-			return userRepo.getByUsername(username);
+			return new ArrayList<>(userRepo.getByUsername(username));
+		}
+
+		public List<User> getByEmail(String email)
+		{
+			return new ArrayList<>(userRepo.getByEmail(email));
 		}
 
 		public List<User> getBy(UserStatus status)
@@ -75,11 +87,11 @@ public class ECommerceService
 	public class OrderCategory // -------------ORDER---------
 	{
 
-		public Order add(Order order)
+		public Order add(Order order) throws IllegalOrderException
 		{
 			if (order.getProducts().isEmpty())
 			{
-				throw new IllegalArgumentException("Cannot add empty order");
+				throw new IllegalOrderException("Cannot add empty order");
 			}
 			return orderRepo.update(order);
 		}
@@ -101,12 +113,7 @@ public class ECommerceService
 
 		public List<Order> getBy(User user)
 		{
-			List<Order> allOrders = new ArrayList<>();
-			for (Order order : user.getOrders())
-			{
-				allOrders.add(orderRepo.getById(order.getId()));
-			}
-			return new ArrayList<>(allOrders);
+			return new ArrayList<>(orderRepo.getByUser(user));
 		}
 
 		public List<Order> getBy(OrderStatus status)
@@ -128,8 +135,12 @@ public class ECommerceService
 
 	public class ProductCategory // ------------PRODUCT------------
 	{
-		public Product add(Product product)
+		public Product add(Product product) throws IllegalProductException
 		{
+			if (product.getName().isEmpty())
+			{
+				throw new IllegalProductException("Product name invalid!");
+			}
 			return prodRepo.update(product);
 		}
 
@@ -150,7 +161,17 @@ public class ECommerceService
 
 		public List<Product> getBy(String name)
 		{
-			return new ArrayList<>(prodRepo.getByName(name.toLowerCase()));
+			return new ArrayList<>(prodRepo.getByName(name));
+		}
+
+		public List<Product> getBy(ProductStatus status)
+		{
+			return new ArrayList<>(prodRepo.getByStatus(status));
+		}
+
+		public List<Product> getBy(double price)
+		{
+			return new ArrayList<>(prodRepo.getByCost(price));
 		}
 
 		public void changeStatus(Product product, ProductStatus status)

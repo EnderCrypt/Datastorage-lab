@@ -3,6 +3,7 @@ package se.github.datalab.main;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import se.github.datalab.exception.ServiceException;
 import se.github.datalab.model.Order;
 import se.github.datalab.model.Product;
 import se.github.datalab.model.User;
@@ -31,21 +32,24 @@ public class Main
 		User user2 = new User("canSena", "dimenticato", "muhammed@sena.se");
 		Product product1 = new Product("EverHard 2.0", "Use at times of masculine deficiency", 99.9);
 		Product product2 = new Product("ShakeWeight", "Exceptional muscle building!", 149.95);
-		Order order1 = new Order();
-
-		//Persist initial entities into database
-		eCom.product.add(product1);
-		eCom.product.add(product2);
+		Order order1 = new Order(product1, product2);
 
 		//Assign arguments to internal collection of object
-		order1.addProduct(product1);
-		order1.addProduct(product2);
 		user1.addOrder(order1);
 
-		//Persist entities
-		eCom.user.add(user1);
-		eCom.user.add(user2);
-		eCom.order.add(order1);
+		try
+		{
+			//Persist initial entities into database
+			eCom.product.add(product1);
+			eCom.product.add(product2);
+			eCom.user.add(user1);
+			eCom.user.add(user2);
+			eCom.order.add(order1);
+		}
+		catch (ServiceException e)
+		{
+			e.printStackTrace();
+		}
 
 		//Update entity values in database
 		eCom.user.changeStatus(user1, UserStatus.BANNED);
@@ -56,6 +60,8 @@ public class Main
 		eCom.order.getBy(90).forEach(System.out::println);
 		eCom.order.getBy(user1).forEach(System.out::println);
 		eCom.product.getBy("hard").forEach(System.out::println);
+		eCom.user.getByEmail("francis@anca.se").forEach(System.out::println);
+		eCom.user.getBy("m").forEach(System.out::println);
 
 	}
 }

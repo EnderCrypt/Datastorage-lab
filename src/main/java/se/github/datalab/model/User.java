@@ -14,9 +14,9 @@ import se.github.datalab.statuses.UserStatus;
 
 @NamedQueries(value = {
 		@NamedQuery(name = "User.GetAll", query = "SELECT u FROM User u"),
-		@NamedQuery(name = "User.GetUserByUsername", query = "SELECT u FROM User u WHERE u.username = :username"),
-		@NamedQuery(name = "User.GetUserByEmail", query = "SELECT u FROM User u WHERE u.email = :email"),
-		@NamedQuery(name = "User.GetUserByStatus", query = "SELECT u FROM User u WHERE u.userStatus = :status")
+		@NamedQuery(name = "User.GetByUsername", query = "SELECT u FROM User u WHERE u.username LIKE :username ORDER BY u.username ASC"),
+		@NamedQuery(name = "User.GetByEmail", query = "SELECT u FROM User u WHERE u.email LIKE :email ORDER BY u.email ASC"),
+		@NamedQuery(name = "User.GetByStatus", query = "SELECT u FROM User u WHERE u.userStatus = :status")
 })
 @Entity
 public class User extends Id

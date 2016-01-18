@@ -16,18 +16,18 @@ import se.github.datalab.statuses.OrderStatus;
 
 @NamedQueries(value = {
 		@NamedQuery(name = "Orders.GetAll", query = "SELECT o FROM Order o"),
-		@NamedQuery(name = "Orders.GetOrderByStatus", query = "SELECT o FROM Order o WHERE o.orderStatus = :status"),
-		@NamedQuery(name = "Orders.GetOrderByMinCost", query = "SELECT o FROM Order o WHERE o.orderCost >= :cost")
+		@NamedQuery(name = "Orders.GetByStatus", query = "SELECT o FROM Order o WHERE o.orderStatus = :status"),
+		@NamedQuery(name = "Orders.GetByTotalCost", query = "SELECT o FROM Order o WHERE o.orderCost = :cost"),
+		@NamedQuery(name = "Orders.GetByUser", query = "SELECT o FROM Order o WHERE o.buyer = :buyer")
 })
 @Entity
 @Table(name = "Orders")
 public class Order extends Id
 {
-	// @Column(nullable = false)
 	@OneToMany(fetch = FetchType.EAGER)
 	private Collection<Product> products;
 
-	@ManyToOne
+	@ManyToOne(targetEntity = User.class)
 	private User buyer;
 
 	private double orderCost;
@@ -38,6 +38,15 @@ public class Order extends Id
 	public Order()
 	{
 		products = new ArrayList<>();
+	}
+
+	public Order(Product... products)
+	{
+		this.products = new ArrayList<>();
+		for (Product product : products)
+		{
+			addProduct(product);
+		}
 	}
 
 	public OrderStatus getOrderStatus()
@@ -72,15 +81,45 @@ public class Order extends Id
 		return buyer;
 	}
 
-	public User setBuyer(User buyer)
+	public void setBuyer(User buyer)
 	{
-		return this.buyer = buyer;
+		this.buyer = buyer;
 	}
 
 	@Override
 	public String toString()
 	{
-		return id + ":" + products.toString() + ":" + orderCost + ":" + orderStatus;
+		return id + ":" + products.toString() + ":" + orderCost + ":" + orderStatus + ":" + buyer.getUsername();
+	}
+
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((buyer == null) ? 0 : buyer.hashCode());
+		result = prime * result + ((products == null) ? 0 : products.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object other)
+	{
+		if (this == other)
+		{
+			return true;
+		}
+		if (other == null)
+		{
+			return false;
+		}
+		if (other instanceof Order)
+		{
+			Order otherOrder = (Order) other;
+			return getProducts().equals(otherOrder.getProducts())
+					&& getBuyer().equals(otherOrder.getBuyer());
+		}
+		return false;
 	}
 
 }

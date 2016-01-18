@@ -1,7 +1,10 @@
 package se.github.datalab.repository.jpastorage;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.TypedQuery;
 
 import se.github.datalab.model.Id;
 import se.github.datalab.repository.StorageRepository;
@@ -21,17 +24,25 @@ public abstract class JpaAbstractRepository<E extends Id> implements StorageRepo
 	public E update(E entity)
 	{
 		EntityManager manager = factory.createEntityManager();
-		manager.getTransaction().begin();
-		if (entity.hasId())
+		try
 		{
-			manager.merge(entity);
+			manager.getTransaction().begin();
+			if (entity.hasId())
+			{
+				return manager.merge(entity);
+			}
+			manager.persist(entity);
 			manager.getTransaction().commit();
-			manager.close();
 			return entity;
 		}
-		manager.persist(entity);
-		manager.getTransaction().commit();
-		manager.close();
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			manager.close();
+		}
 		return entity;
 
 	}
@@ -40,31 +51,63 @@ public abstract class JpaAbstractRepository<E extends Id> implements StorageRepo
 	public E remove(E entity)
 	{
 		EntityManager manager = factory.createEntityManager();
-		manager.getTransaction().begin();
-		manager.remove(manager.contains(entity) ? entity : manager.merge(entity));
-		manager.getTransaction().commit();
-		manager.close();
-		return entity;
+		try
+		{
+			manager.getTransaction().begin();
+			manager.remove(manager.contains(entity) ? entity : manager.merge(entity));
+			manager.getTransaction().commit();
+			return entity;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			manager.close();
+		}
+		return null;
 	}
 
 	@Override
 	public E getById(Long id)
 	{
 		EntityManager manager = factory.createEntityManager();
-		manager.getTransaction().begin();
 		try
 		{
 			return manager.find(entityClass, id);
 		}
-		catch (IllegalArgumentException e)
+		catch (Exception e)
 		{
-			throw new RuntimeException(e);
+			throw new RuntimeException();
 		}
 		finally
 		{
-			manager.getTransaction().commit();
 			manager.close();
 		}
+	}
+
+	public List<E> query(String queryName, Class<E> entityClass)
+	{
+		EntityManager manager = factory.createEntityManager();
+		try
+		{
+			manager.getTransaction().begin();
+			TypedQuery<E> query = manager.createNamedQuery(queryName, entityClass);
+			List<E> result = query.getResultList();
+			manager.getTransaction().commit();
+			return result;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			manager.close();
+		}
+		return null;
+
 	}
 
 }

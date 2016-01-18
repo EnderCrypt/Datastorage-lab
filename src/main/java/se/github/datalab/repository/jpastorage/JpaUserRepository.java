@@ -22,11 +22,18 @@ public class JpaUserRepository extends JpaAbstractRepository<User> implements Us
 	@Override
 	public Collection<User> getAll()
 	{
+		return query("User.GetAll", User.class);
+	}
+
+	@Override
+	public List<User> getByEmail(String email)
+	{
 		EntityManager manager = factory.createEntityManager();
 		try
 		{
-			TypedQuery<User> result = manager.createNamedQuery("User.GetAll", User.class);
-			return result.getResultList();
+			TypedQuery<User> query = manager.createNamedQuery("User.GetByEmail", User.class);
+			query.setParameter("email", "%" + email + "%");
+			return query.getResultList();
 		}
 		catch (IllegalArgumentException e)
 		{
@@ -39,34 +46,14 @@ public class JpaUserRepository extends JpaAbstractRepository<User> implements Us
 	}
 
 	@Override
-	public User getByEmail(String email)
+	public List<User> getByUsername(String username)
 	{
 		EntityManager manager = factory.createEntityManager();
 		try
 		{
-			TypedQuery<User> result = manager.createNamedQuery("User.GetUserByEmail", User.class);
-			result.setParameter("email", email);
-			return result.getResultList().get(0);
-		}
-		catch (IllegalArgumentException e)
-		{
-			throw new RuntimeException();
-		}
-		finally
-		{
-			manager.close();
-		}
-	}
-
-	@Override
-	public User getByUsername(String username)
-	{
-		EntityManager manager = factory.createEntityManager();
-		try
-		{
-			TypedQuery<User> result = manager.createNamedQuery("User.GetUserByUsername", User.class);
-			result.setParameter("username", username);
-			return result.getResultList().get(0);
+			TypedQuery<User> query = manager.createNamedQuery("User.GetByUsername", User.class);
+			query.setParameter("username", "%" + username + "%");
+			return query.getResultList();
 		}
 		catch (IllegalArgumentException e)
 		{
@@ -84,9 +71,9 @@ public class JpaUserRepository extends JpaAbstractRepository<User> implements Us
 		EntityManager manager = factory.createEntityManager();
 		try
 		{
-			TypedQuery<User> result = manager.createNamedQuery("User.GetUserByStatus", User.class);
-			result.setParameter("status", status.ordinal());
-			return result.getResultList();
+			TypedQuery<User> query = manager.createNamedQuery("User.GetByStatus", User.class);
+			query.setParameter("status", status.ordinal());
+			return query.getResultList();
 		}
 		catch (IllegalArgumentException e)
 		{

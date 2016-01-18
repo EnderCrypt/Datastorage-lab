@@ -8,6 +8,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.TypedQuery;
 
 import se.github.datalab.model.Order;
+import se.github.datalab.model.User;
 import se.github.datalab.repository.OrderRepository;
 import se.github.datalab.statuses.OrderStatus;
 
@@ -22,66 +23,72 @@ public class JpaOrderRepository extends JpaAbstractRepository<Order> implements 
 	@Override
 	public Collection<Order> getAll()
 	{
-		EntityManager manager = factory.createEntityManager();
-		manager.getTransaction().begin();
-		try
-		{
-			TypedQuery<Order> result = manager.createNamedQuery("Orders.GetAll", Order.class);
-			return result.getResultList();
-		}
-		catch (IllegalArgumentException e)
-		{
-			throw new RuntimeException(e);
-		}
-		finally
-		{
-			manager.getTransaction().commit();
-			manager.close();
-		}
+		return query("Orders.GetAll", Order.class);
 	}
 
 	@Override
-	public List<Order> getByStatus(OrderStatus status)
+	public Collection<Order> getByStatus(OrderStatus status)
 	{
 		EntityManager manager = factory.createEntityManager();
-		manager.getTransaction().begin();
 		try
 		{
-			TypedQuery<Order> result = manager.createNamedQuery("Orders.GetOrderByStatus", Order.class);
-			result.setParameter("status", status.ordinal());
-			return result.getResultList();
+			TypedQuery<Order> query = manager.createNamedQuery("Orders.GetByStatus", Order.class);
+			query.setParameter("status", status.ordinal());
+			List<Order> result = query.getResultList();
+			return result;
 		}
-		catch (IllegalArgumentException e)
+		catch (Exception e)
 		{
-			throw new RuntimeException(e);
+			e.printStackTrace();
 		}
 		finally
 		{
-			manager.getTransaction().commit();
 			manager.close();
 		}
+		return null;
 	}
 
 	@Override
 	public Collection<Order> getByMinCost(double price)
 	{
 		EntityManager manager = factory.createEntityManager();
-		manager.getTransaction().begin();
 		try
 		{
-			TypedQuery<Order> result = manager.createNamedQuery("Orders.GetOrderByMinCost", Order.class);
-			result.setParameter("cost", price);
-			return result.getResultList();
+			TypedQuery<Order> query = manager.createNamedQuery("Orders.GetByTotalCost", Order.class);
+			query.setParameter("cost", price);
+			return query.getResultList();
 		}
-		catch (IllegalArgumentException e)
+		catch (Exception e)
 		{
-			throw new RuntimeException(e);
+			e.printStackTrace();
 		}
 		finally
 		{
-			manager.getTransaction().commit();
 			manager.close();
 		}
+		return null;
+	}
+
+	@Override
+	public Collection<Order> getByUser(User user)
+	{
+		EntityManager manager = factory.createEntityManager();
+		try
+		{
+			TypedQuery<Order> query = manager.createNamedQuery("Orders.GetByUser", Order.class);
+			query.setParameter("buyer", user);
+			List<Order> result = query.getResultList();
+			return result;
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally
+		{
+			manager.close();
+		}
+		return null;
 	}
 
 }

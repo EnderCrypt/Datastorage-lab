@@ -11,8 +11,8 @@ public interface UserRepository extends StorageRepository<User>
 
 	Collection<User> getByStatus(UserStatus status);
 
-	User getByEmail(String email);
+	Collection<User> getByEmail(String email);
 
-	User getByUsername(String username);
+	Collection<User> getByUsername(String username);
 
 }

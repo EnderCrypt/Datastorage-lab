@@ -5,6 +5,5 @@
 .project
 .settings
 bin/
-src/main/resources/META-INF/persistence.xml
 target/
 pom.xml

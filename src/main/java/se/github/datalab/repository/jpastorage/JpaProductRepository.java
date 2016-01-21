@@ -1,7 +1,6 @@
 package se.github.datalab.repository.jpastorage;
 
 import java.util.Collection;
-import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -26,7 +25,7 @@ public class JpaProductRepository extends JpaAbstractRepository<Product> impleme
 	}
 
 	@Override
-	public List<Product> getByName(String name)
+	public Collection<Product> getByName(String name)
 	{
 		EntityManager manager = factory.createEntityManager();
 		try
@@ -46,7 +45,7 @@ public class JpaProductRepository extends JpaAbstractRepository<Product> impleme
 	}
 
 	@Override
-	public List<Product> getByStatus(ProductStatus status)
+	public Collection<Product> getByStatus(ProductStatus status)
 	{
 		EntityManager manager = factory.createEntityManager();
 		try
@@ -67,7 +66,7 @@ public class JpaProductRepository extends JpaAbstractRepository<Product> impleme
 	}
 
 	@Override
-	public List<Product> getByCost(double price)
+	public Collection<Product> getByCost(double price)
 	{
 		EntityManager manager = factory.createEntityManager();
 		try

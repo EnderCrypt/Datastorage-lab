@@ -1,7 +1,6 @@
 package se.github.datalab.repository.jpastorage;
 
 import java.util.Collection;
-import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -26,7 +25,7 @@ public class JpaUserRepository extends JpaAbstractRepository<User> implements Us
 	}
 
 	@Override
-	public List<User> getByEmail(String email)
+	public Collection<User> getByEmail(String email)
 	{
 		EntityManager manager = factory.createEntityManager();
 		try
@@ -46,7 +45,7 @@ public class JpaUserRepository extends JpaAbstractRepository<User> implements Us
 	}
 
 	@Override
-	public List<User> getByUsername(String username)
+	public Collection<User> getByUsername(String username)
 	{
 		EntityManager manager = factory.createEntityManager();
 		try
@@ -66,7 +65,7 @@ public class JpaUserRepository extends JpaAbstractRepository<User> implements Us
 	}
 
 	@Override
-	public List<User> getByStatus(UserStatus status)
+	public Collection<User> getByStatus(UserStatus status)
 	{
 		EntityManager manager = factory.createEntityManager();
 		try

@@ -42,7 +42,7 @@ public class Order extends Id
 
 	public Order(Product... products)
 	{
-		this.products = new ArrayList<>();
+		this();
 		for (Product product : products)
 		{
 			addProduct(product);

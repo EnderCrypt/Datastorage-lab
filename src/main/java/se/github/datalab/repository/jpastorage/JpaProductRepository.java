@@ -36,12 +36,13 @@ public class JpaProductRepository extends JpaAbstractRepository<Product> impleme
 		}
 		catch (Exception e)
 		{
-			throw new RuntimeException();
+			logger.log(e);
 		}
 		finally
 		{
 			manager.close();
 		}
+		return null;
 	}
 
 	@Override
@@ -56,7 +57,7 @@ public class JpaProductRepository extends JpaAbstractRepository<Product> impleme
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			logger.log(e);
 		}
 		finally
 		{
@@ -77,7 +78,7 @@ public class JpaProductRepository extends JpaAbstractRepository<Product> impleme
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			logger.log(e);
 		}
 		finally
 		{

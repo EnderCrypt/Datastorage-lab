@@ -36,12 +36,13 @@ public class JpaUserRepository extends JpaAbstractRepository<User> implements Us
 		}
 		catch (IllegalArgumentException e)
 		{
-			throw new RuntimeException();
+			logger.log(e);
 		}
 		finally
 		{
 			manager.close();
 		}
+		return null;
 	}
 
 	@Override
@@ -56,12 +57,13 @@ public class JpaUserRepository extends JpaAbstractRepository<User> implements Us
 		}
 		catch (IllegalArgumentException e)
 		{
-			throw new RuntimeException();
+			logger.log(e);
 		}
 		finally
 		{
 			manager.close();
 		}
+		return null;
 	}
 
 	@Override
@@ -76,12 +78,13 @@ public class JpaUserRepository extends JpaAbstractRepository<User> implements Us
 		}
 		catch (IllegalArgumentException e)
 		{
-			throw new RuntimeException(e);
+			logger.log(e);
 		}
 		finally
 		{
 			manager.close();
 		}
+		return null;
 	}
 
 }

@@ -39,7 +39,7 @@ public class JpaOrderRepository extends JpaAbstractRepository<Order> implements 
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			logger.log(e);
 		}
 		finally
 		{
@@ -60,7 +60,7 @@ public class JpaOrderRepository extends JpaAbstractRepository<Order> implements 
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			logger.log(e);
 		}
 		finally
 		{
@@ -82,7 +82,7 @@ public class JpaOrderRepository extends JpaAbstractRepository<Order> implements 
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			logger.log(e);
 		}
 		finally
 		{

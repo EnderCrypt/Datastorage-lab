@@ -1,6 +1,7 @@
 package se.github.datalab.repository.jpastorage;
 
 import java.util.List;
+import java.util.logging.Level;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -8,9 +9,18 @@ import javax.persistence.TypedQuery;
 
 import se.github.datalab.model.Id;
 import se.github.datalab.repository.StorageRepository;
+import se.github.datalab.service.BasicLogger;
 
 public abstract class JpaAbstractRepository<E extends Id> implements StorageRepository<E>
 {
+	protected static BasicLogger logger = new BasicLogger("Jpa log");
+
+	static
+	{
+		logger.doConsoleOutput(false);
+		logger.log(Level.INFO, "Logging started!");
+	}
+
 	protected EntityManagerFactory factory;
 	protected Class<E> entityClass;
 
@@ -37,7 +47,7 @@ public abstract class JpaAbstractRepository<E extends Id> implements StorageRepo
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			logger.log(e, "test");
 		}
 		finally
 		{
@@ -60,7 +70,7 @@ public abstract class JpaAbstractRepository<E extends Id> implements StorageRepo
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			logger.log(e);
 		}
 		finally
 		{
@@ -79,12 +89,13 @@ public abstract class JpaAbstractRepository<E extends Id> implements StorageRepo
 		}
 		catch (Exception e)
 		{
-			throw new RuntimeException();
+			logger.log(e);
 		}
 		finally
 		{
 			manager.close();
 		}
+		return null;
 	}
 
 	public List<E> query(String queryName, Class<E> entityClass)
@@ -100,14 +111,12 @@ public abstract class JpaAbstractRepository<E extends Id> implements StorageRepo
 		}
 		catch (Exception e)
 		{
-			e.printStackTrace();
+			logger.log(e);
 		}
 		finally
 		{
 			manager.close();
 		}
 		return null;
-
 	}
-
 }
